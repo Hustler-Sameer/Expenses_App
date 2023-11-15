@@ -27,6 +27,16 @@ class _Expenses extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // IN scaffold widget we can directly declare appbar
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+            color: Colors.white,
+          ),
+        ],
+      ),
       body: Column(
         children: [
           const Text('Welcome to the App'),
