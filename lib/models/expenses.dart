@@ -1,11 +1,26 @@
 // creating a data model
 
 import 'package:uuid/uuid.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+// using dateformatter from intl package
+final formatter = DateFormat.yMd();
+
 // this uuid class enables us to create an unique id
 
 const uuid = Uuid();
 
 enum Category { food, travel, leisure, work }
+// this values are treated kind of strings
+
+const categoryIcons = {
+  Category.food: Icons.lunch_dining,
+  Category.travel: Icons.flight_takeoff,
+  Category.leisure: Icons.movie,
+  Category.work: Icons.work,
+  // here we have mapped various icons with the enums category available to us.
+};
 
 class Expense {
   // here we will use named parameters as we need to accept multiple parameters
@@ -31,4 +46,8 @@ class Expense {
   // using datetime datatype
   final DateTime date;
   final Category category;
+
+  String get formattedDate {
+    return formatter.format(date);
+  }
 }
