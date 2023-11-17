@@ -25,14 +25,22 @@ class _Expenses extends State<Expenses> {
         date: DateTime.now(),
         category: Category.leisure)
   ];
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+  // we will execute this functoin in add expense file
 
   void _openAddExpenseOverlay() {
     print('add expense button clicked');
     showModalBottomSheet(
+        isScrollControlled: true,
+        // this allows us to take our modal whole screen
         context: context,
         builder: (ctx) {
           // now adding new file
-          return const NewExpense();
+          return NewExpense(onAddExpense: _addExpense);
         });
   }
 
