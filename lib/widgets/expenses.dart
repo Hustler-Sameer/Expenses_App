@@ -50,7 +50,7 @@ class _Expenses extends State<Expenses> {
       _registeredExpenses.remove(expense);
     });
 
-    // this will now remove expense
+    // this will now remove expense and also give the option for undo
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Expense Deleted '),
         duration: Duration(seconds: 3),
