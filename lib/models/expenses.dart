@@ -51,3 +51,26 @@ class Expense {
     return formatter.format(date);
   }
 }
+// creating a datamodel for chart
+
+class ExpenseBucket {
+  const ExpenseBucket({required this.category, required this.expenses});
+  final category;
+  final List<Expense> expenses;
+
+  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category)
+      : expenses = allExpenses
+            .where((expense) => expense.category == category)
+            .toList();
+  // the above function is a utility function that helps us to filter out on basis of some category
+  // some category and then it starts to make a list and hence it gives us the list of items of same category
+  double get totalExpenses {
+    double sum = 0;
+    // for in l
+    for (final expense in expenses) {
+      sum = sum + expense.amount;
+    }
+
+    return sum;
+  }
+}
