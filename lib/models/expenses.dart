@@ -63,7 +63,7 @@ class ExpenseBucket {
             .where((expense) => expense.category == category)
             .toList();
   // the above function is a utility function that helps us to filter out on basis of some category
-  // some category and then it starts to make a list and hence it gives us the list of items of same category
+  // some category and then it starts to make a list and hence it gives us the list of items of same category,
   double get totalExpenses {
     double sum = 0;
     // for in l

@@ -4,6 +4,8 @@ import 'package:expense_app/models/expenses.dart';
 import 'package:expense_app/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
+// here we will be adjusting
+
 class Expenses extends StatefulWidget {
   const Expenses({super.key}); // constructor function
 
@@ -67,6 +69,9 @@ class _Expenses extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    // we will show row if necessary width is greater than certain length
+    final width = MediaQuery.of(context).size.width;
+    //print(MediaQuery.of(context).size.height);
     Widget mainContent = const Center(
       child: Text(
         'No expense found , start adding!!',
@@ -92,15 +97,28 @@ class _Expenses extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // this creates a chart
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          )
-        ],
-      ),
+      body: width < 600 // terniary equation to get the output
+
+          ? Column(
+              children: [
+                // this creates a chart
+                Chart(expenses: _registeredExpenses),
+                Expanded(
+                  child: mainContent,
+                )
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
+                // we have wrapped the chart widget in expanded as in chart.dart at line 43 width -
+                // width is infinity and row also tries to get infinite width
+                // hence we wrap it around expanded
+                Expanded(
+                  child: mainContent,
+                )
+              ],
+            ),
     );
   }
 }

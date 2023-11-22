@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:expense_app/widgets/expenses.dart';
+import 'package:flutter/services.dart';
+// importing services.dart file to lock orientation of our app
+// checkout main function we have passed preffered orientation
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -12,6 +15,13 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 // in themeing
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitUp,
+  //   ],
+  //   // here we are locking the ui to potrait only
+  // ).then((fn) {
   runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
@@ -67,4 +77,5 @@ void main() {
       home: const Expenses(),
     ),
   );
+  // });
 }
