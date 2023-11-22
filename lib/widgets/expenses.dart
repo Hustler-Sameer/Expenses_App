@@ -38,6 +38,7 @@ class _Expenses extends State<Expenses> {
   void _openAddExpenseOverlay() {
     print('add expense button clicked');
     showModalBottomSheet(
+        useSafeArea: true,
         isScrollControlled: true,
         // this allows us to take our modal whole screen
         context: context,

@@ -83,95 +83,111 @@ class _NewExpense extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            maxLength: 50,
-            keyboardType: TextInputType.multiline,
-            decoration: const InputDecoration(
-              label: Text('Title'),
-            ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _amountController,
-                  maxLength: 10,
-                  keyboardType: TextInputType.number,
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return LayoutBuilder(builder: (ctx, constraints) {
+      // we are using layoutbuilder to get min and maximum element geometries possible
+      print(constraints.minHeight);
+      print(constraints.maxHeight);
+      print(constraints.minWidth);
+      print(constraints.maxHeight);
+      final maxWidth = constraints.maxHeight;
+      return SizedBox(
+        height: double
+            .infinity, // this is to make modal full screen weven in landScape mode
+        child: SingleChildScrollView(
+          // this is due to conversion to landscape mode
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 48, 16, keyboardSpace + 16),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _titleController,
+                  maxLength: 50,
+                  keyboardType: TextInputType.multiline,
                   decoration: const InputDecoration(
-                    prefixText: '\$ ',
-                    label: Text('Amount'),
+                    label: Text('Title'),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Row(
                   children: [
-                    Text(_datePicked == null
-                        ? 'No date selected'
-                        : formatter.format(_datePicked!)),
-                    IconButton(
-                        onPressed: _presentDatePicker,
-                        icon: const Icon(
-                          Icons.calendar_month,
-                        ))
+                    Expanded(
+                      child: TextField(
+                        controller: _amountController,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          prefixText: '\$ ',
+                          label: Text('Amount'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(_datePicked == null
+                              ? 'No date selected'
+                              : formatter.format(_datePicked!)),
+                          IconButton(
+                              onPressed: _presentDatePicker,
+                              icon: const Icon(
+                                Icons.calendar_month,
+                              ))
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    DropdownButton(
+                        value: _selectedCategory,
+                        items: Category.values
+                            .map((category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(
+                                  category.name.toUpperCase(),
+                                )))
+                            .toList(),
+                        onChanged: (value) {
+                          print(value);
+                          if (value == null) {
+                            return;
+                          }
+                          setState(() {
+                            _selectedCategory = value;
+                          });
+                        }),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        //This navigator pop takes input of upper context so it
+                        // it understands what it needs to close
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                        // onPressed: () {
+                        //   print(_titleController.text);
+                        //   print(_amountController.text);
+                        // },
+                        onPressed: _submitButtonHandler,
+                        child: const Text('Save Expense')),
+                  ],
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              DropdownButton(
-                  value: _selectedCategory,
-                  items: Category.values
-                      .map((category) => DropdownMenuItem(
-                          value: category,
-                          child: Text(
-                            category.name.toUpperCase(),
-                          )))
-                      .toList(),
-                  onChanged: (value) {
-                    print(value);
-                    if (value == null) {
-                      return;
-                    }
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  }),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  //This navigator pop takes input of upper context so it
-                  // it understands what it needs to close
-                },
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                  // onPressed: () {
-                  //   print(_titleController.text);
-                  //   print(_amountController.text);
-                  // },
-                  onPressed: _submitButtonHandler,
-                  child: const Text('Save Expense')),
-            ],
-          )
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }
 
