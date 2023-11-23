@@ -90,7 +90,7 @@ class _NewExpense extends State<NewExpense> {
       print(constraints.maxHeight);
       print(constraints.minWidth);
       print(constraints.maxHeight);
-      final maxWidth = constraints.maxHeight;
+      //final maxWidth = constraints.maxHeight;
       return SizedBox(
         height: double
             .infinity, // this is to make modal full screen weven in landScape mode
